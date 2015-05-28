@@ -49,18 +49,13 @@ CvWindow_Sink::~CvWindow_Sink() {
 void CvWindow_Sink::prepareInterface() {
 	CLOG(LTRACE) << "CvWindow_Sink::configure";
 
-	h_onRefresh.setup(this, &CvWindow_Sink::onRefresh);
-	registerHandler("onRefresh", &h_onRefresh);
+	registerHandler("onRefresh", boost::bind(&CvWindow_Sink::onRefresh, this));
 
 	addDependency("onRefresh", NULL);
 
-	Base::EventHandler2 * hand;
 	for (int i = 0; i < count; ++i) {
 		char id = '0' + i;
-		hand = new Base::EventHandler2;
-		hand->setup(boost::bind(&CvWindow_Sink::onNewImageN, this, i));
-		handlers.push_back(hand);
-		registerHandler(std::string("onNewImage") + id, hand);
+		registerHandler(std::string("onNewImage") + id, boost::bind(&CvWindow_Sink::onNewImageN, this, i));
 
 		Base::DataStreamIn<cv::Mat, Base::DataStreamBuffer::Newest,
 				Base::Synchronization::Mutex> * stream =
@@ -78,17 +73,13 @@ void CvWindow_Sink::prepareInterface() {
 		registerStream(std::string("out_point") + id, out_point[i]);
 
 		// save handlers
-		hand = new Base::EventHandler2;
-		hand->setup(boost::bind(&CvWindow_Sink::onSaveImageN, this, i));
-		handlers.push_back(hand);
-		registerHandler(std::string("onSaveImage") + id, hand);
+		registerHandler(std::string("onSaveImage") + id, boost::bind(&CvWindow_Sink::onSaveImageN, this, i));
 	}
 
-	h_onSaveAllImages.setup(this, &CvWindow_Sink::onSaveAllImages);
-	registerHandler("onSaveAllImages", &h_onSaveAllImages);
+	registerHandler("onSaveAllImages", boost::bind(&CvWindow_Sink::onSaveAllImages, this));
 
 	// register aliases for first handler and streams
-	registerHandler("onNewImage", handlers[0]);
+	registerHandler("onNewImage", boost::bind(&CvWindow_Sink::onNewImageN, this, 0));
 	registerStream("in_img", in_img[0]);
 	registerStream("in_draw", in_draw[0]);
 
