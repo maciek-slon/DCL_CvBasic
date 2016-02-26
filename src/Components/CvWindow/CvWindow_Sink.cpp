@@ -28,7 +28,14 @@ CvWindow_Sink::CvWindow_Sink(const std::string & name) :
 			"save.directory", boost::bind(&CvWindow_Sink::onDirChanged, this, _1, _2), "./"),
 			filename("save.filename", boost::bind(&CvWindow_Sink::onFilenameChanged, this, _1, _2), name),
 			count("count", 1),
-			mouse_tracking("mouse.tracking", false)
+			mouse_tracking("mouse.tracking", false),
+			grid_enabled("grid.enabled", true),
+			grid_rows("grid.rows", 2),
+			grid_cols("grid.cols", 3),
+			grid_step_x("grid.step_x", 640),
+			grid_step_y("grid.step_y", 510),
+			grid_offset_x("grid.offset_x", 0),
+			grid_offset_y("grid.offset_y", 0)
 {
 	CLOG(LTRACE) << "Hello CvWindow_Sink\n";
 
@@ -36,10 +43,19 @@ CvWindow_Sink::CvWindow_Sink(const std::string & name) :
 
 	count.setToolTip("Total number of displayed windows");
 	registerProperty(count);
-	registerProperty( filename);
-	registerProperty( dir);
+	registerProperty(filename);
+	registerProperty(dir);
 
 	firststep = true;
+	
+	registerProperty(mouse_tracking);
+	registerProperty(grid_enabled);
+	registerProperty(grid_rows);
+	registerProperty(grid_cols);
+	registerProperty(grid_step_x);
+	registerProperty(grid_step_y);
+	registerProperty(grid_offset_x);
+	registerProperty(grid_offset_y);
 }
 
 CvWindow_Sink::~CvWindow_Sink() {
@@ -103,8 +119,34 @@ void CvWindow_Sink::prepareInterface() {
 bool CvWindow_Sink::onInit() {
 	CLOG(LTRACE) << "CvWindow_Sink::initialize\n";
 
+	int gc = 0;
+	int gr = 0;
+	int gx = grid_offset_x;
+	int gy = grid_offset_y;
+
 	for (int i = 0; i < count; ++i) {
 		cv::namedWindow(titles[i]);
+		
+		if (grid_enabled) {
+			cv::moveWindow(titles[i], gx, gy);
+			
+			gc = gc + 1;
+			gx = gx + grid_step_x;
+			
+			if (gc >= grid_cols) {
+				gc = 0;
+				gx = grid_offset_x;
+				gr = gr + 1;
+				gy = gy + grid_step_y;
+			}
+			if (gr >= grid_rows) {
+				gc = 0;
+				gr = 0;
+				gx = grid_offset_x;
+				gy = grid_offset_y;
+			}
+		}
+		
 		
 		// mouse callbacks
 		MouseCallbackInfo * cbi = new MouseCallbackInfo(this, i);

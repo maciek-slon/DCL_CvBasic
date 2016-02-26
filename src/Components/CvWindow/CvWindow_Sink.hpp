@@ -219,6 +219,14 @@ protected:
 	Base::Property<bool> mouse_tracking;
 
 	std::vector<Base::DataStreamOut<cv::Point2f> *> out_point;
+	
+	Base::Property<bool> grid_enabled;
+	Base::Property<int> grid_rows;
+	Base::Property<int> grid_cols;
+	Base::Property<int> grid_step_x;
+	Base::Property<int> grid_step_y;
+	Base::Property<int> grid_offset_x;
+	Base::Property<int> grid_offset_y;
 };
 
 }//: namespace CvWindow
