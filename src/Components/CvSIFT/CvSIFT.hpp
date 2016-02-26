@@ -88,6 +88,8 @@ protected:
 
 	/// Output data stream containing feature descriptors
 	Base::DataStreamOut <cv::Mat> out_descriptors;
+	
+	Base::Property<int> prop_scale;
 
 };
 

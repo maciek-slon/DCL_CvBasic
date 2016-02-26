@@ -24,7 +24,10 @@ namespace Processors {
 namespace CvSIFT {
 
 CvSIFT::CvSIFT(const std::string & name) :
-		Base::Component(name)  {
+		Base::Component(name),
+		prop_scale("scale", 1)  {
+
+	registerProperty(prop_scale);
 
 }
 
@@ -76,6 +79,11 @@ void CvSIFT::onNewImage()
 		cv::SiftDescriptorExtractor extractor;
 		Mat descriptors;
 		extractor.compute( input, keypoints, descriptors);
+
+		if (prop_scale != 1) {
+			for (int i = 0 ; i < keypoints.size(); ++i)
+				keypoints[i].pt = keypoints[i].pt * (1.0 / prop_scale);
+		}
 
 		// Write results to outputs.
 	    Types::Features features(keypoints);
