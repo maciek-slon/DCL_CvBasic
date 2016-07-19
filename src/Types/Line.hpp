@@ -10,6 +10,7 @@
 
 #include "Drawable.hpp"
 #include <cmath>
+#include <opencv2/imgproc.hpp>
 
 namespace Types {
 

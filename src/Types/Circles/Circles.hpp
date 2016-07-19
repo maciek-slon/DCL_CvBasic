@@ -8,10 +8,11 @@
 #ifndef CIRCLES_HPP_
 #define CIRCLES_HPP_
 
+#include "Types/Drawable.hpp"
+
 #include <vector>
 #include <opencv2/core/core.hpp>
-
-#include "Types/Drawable.hpp"
+#include <opencv2/imgproc.hpp>
 
 using namespace cv;
 

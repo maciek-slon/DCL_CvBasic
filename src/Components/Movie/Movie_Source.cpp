@@ -50,7 +50,7 @@ bool Movie_Source::onInit() {
 		return false;
 	}
 
-	cap.open(filename);
+	cap.open(filename());
 
 	if (!cap.isOpened()) {
 		LOG(LERROR) << "Couldn't open movie " << filename;

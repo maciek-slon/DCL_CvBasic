@@ -145,7 +145,7 @@ protected:
 
 private:
 	// Classifier.true
-	CvNormalBayesClassifier bayes;
+	cv::Ptr<cv::ml::NormalBayesClassifier> bayes;
 
 	// The vector of vectors of moments used for training
 	vector<Moments> training_dataset;

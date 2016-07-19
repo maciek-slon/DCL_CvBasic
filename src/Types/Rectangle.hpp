@@ -7,8 +7,7 @@
 #define RECTANGLE_HPP_
 
 #include "Drawable.hpp"
-
-#include <cv.h>
+#include <opencv2/imgproc.hpp>
 
 namespace Types {
 
