@@ -5,8 +5,9 @@ SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 FIND_PACKAGE( OpenCV REQUIRED )
 
 FIND_FILE(NONFREE_INCLUDE "opencv2/nonfree/features2d.hpp" PATHS ${OpenCV_INCLUDE_DIRS})
+FIND_FILE(XFEATURES_INCLUDE "opencv2/xfeatures2d.hpp" PATHS ${OpenCV_INCLUDE_DIRS})
 
-IF (NONFREE_INCLUDE OR ${OpenCV_VERSION} VERSION_LESS 2.4)
+IF (XFEATURES_INCLUDE OR NONFREE_INCLUDE OR ${OpenCV_VERSION} VERSION_LESS 2.4)
 
 # Create a variable containing all .cpp files:
 FILE(GLOB files *.cpp)
@@ -21,6 +22,6 @@ INSTALL_COMPONENT(CvSIFT)
 
 ELSE()
 
-MESSAGE(STATUS "Skipping SIFT - required nonfree module not found.")
+MESSAGE(STATUS "Skipping SIFT - required module not found.")
 
 ENDIF()

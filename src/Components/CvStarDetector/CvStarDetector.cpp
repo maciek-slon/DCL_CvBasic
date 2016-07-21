@@ -13,6 +13,14 @@
 
 #include <boost/bind.hpp>
 
+#if (CV_MAJOR_VERSION == 2)
+#if (CV_MINOR_VERSION > 3)
+#include <opencv2/nonfree/features2d.hpp>
+#endif
+#elif (CV_MAJOR_VERSION == 3)
+#include <opencv2/xfeatures2d.hpp>
+#endif
+
 namespace Processors {
 namespace CvStarDetector {
 
@@ -35,7 +43,6 @@ void CvStarDetector::prepareInterface() {
 	// Input and output data streams.
 	registerStream("in_img", &in_img);
 	registerStream("out_features", &out_features);
-	registerStream("out_descriptors", &out_descriptors);
 }
 
 bool CvStarDetector::onInit() {
@@ -63,24 +70,21 @@ void CvStarDetector::onNewImage()
 		cv::Mat input = in_img.read();
 		cv::Mat gray;
 		cvtColor(input, gray, COLOR_BGR2GRAY);
+		std::vector<KeyPoint> keypoints;
 
+#if CV_VERSION_MAJOR==2
         //-- Step 1: Detect the keypoints using StarDetector Detector.
         cv::StarDetector /*StarFeatureDetector*/ detector( nfeatures/*, scaleFactor, nlevels, edgeThreshold, firstLevel, WTA_K, scoreType, patchSize*/);
-		std::vector<KeyPoint> keypoints;
+
 		detector.detect( gray, keypoints );
-
-
-		//-- Step 2: Calculate descriptors (feature vectors) - SURF descriptor.
-        cv::SurfDescriptorExtractor extractor;
-		cv::Mat descriptors;
-		extractor.compute( gray, keypoints, descriptors);
+#elif CV_VERSION_MAJOR==3
+		cv::Ptr<cv::xfeatures2d::StarDetector> star = cv::xfeatures2d::StarDetector::create(nfeatures);
+		star->detect(gray, keypoints);
+#endif
 
 		// Write features to the output.
 	    Types::Features features(keypoints);
 		out_features.write(features);
-
-		// Write descriptors to the output.
-		out_descriptors.write(descriptors);
 	} catch (...) {
         LOG(LERROR) << "CvStarDetector::onNewImage failed\n";
 	}

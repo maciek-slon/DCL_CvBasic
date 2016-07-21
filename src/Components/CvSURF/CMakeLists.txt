@@ -8,7 +8,8 @@ FILE(GLOB files *.cpp)
 FIND_PACKAGE( OpenCV REQUIRED )
 
 FIND_FILE(NONFREE_INCLUDE "opencv2/nonfree/features2d.hpp" PATHS ${OpenCV_INCLUDE_DIRS})
-IF (NONFREE_INCLUDE OR ${OpenCV_VERSION} VERSION_LESS 2.4)
+FIND_FILE(XFEATURES_INCLUDE "opencv2/xfeatures2d.hpp" PATHS ${OpenCV_INCLUDE_DIRS})
+IF (NONFREE_INCLUDE OR XFEATURES_INCLUDE OR ${OpenCV_VERSION} VERSION_LESS 2.4)
 
 # Create an executable file from sources:
 ADD_LIBRARY(CvSURF SHARED ${files})
@@ -20,6 +21,6 @@ INSTALL_COMPONENT(CvSURF)
 
 ELSE()
 
-MESSAGE(STATUS "Skipping SURF - required nonfree module not found.")
+MESSAGE(STATUS "Skipping SURF - required module not found.")
 
 ENDIF()

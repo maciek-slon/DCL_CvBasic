@@ -12,6 +12,15 @@
 
 #include <boost/bind.hpp>
 
+#if (CV_MAJOR_VERSION == 2)
+#if (CV_MINOR_VERSION > 3)
+#include <opencv2/nonfree/features2d.hpp>
+#endif
+#elif (CV_MAJOR_VERSION == 3)
+#include <opencv2/xfeatures2d.hpp>
+#endif
+
+
 namespace Processors {
 namespace CvSURF {
 
@@ -62,17 +71,22 @@ void CvSURF::onNewImage()
 		cv::Mat input = in_img.read();
 
 
+		std::vector<KeyPoint> keypoints;
+		Mat descriptors;
+
+#if CV_VERSION_MAJOR==2
 		//-- Step 1: Detect the keypoints using SURF Detector.
 		SurfFeatureDetector detector( minHessian );
-		std::vector<KeyPoint> keypoints;
 		detector.detect( input, keypoints );
 
 
 		//-- Step 2: Calculate descriptors (feature vectors).
         SurfDescriptorExtractor extractor;
-		Mat descriptors;
 		extractor.compute( input, keypoints, descriptors);
-
+#elif CV_VERSION_MAJOR==3
+		cv::Ptr<cv::xfeatures2d::SURF> surf = cv::xfeatures2d::SURF::create(minHessian);
+		surf->detectAndCompute(input, cv::Mat(), keypoints, descriptors);
+#endif
 		// Write features to the output.
 	    Types::Features features(keypoints);
 		out_features.write(features);

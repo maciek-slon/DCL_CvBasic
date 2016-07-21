@@ -67,16 +67,22 @@ void CvBRISK::onNewImage()
 
         //-- Step 1: Detect the keypoints using Brisk Detector.
         //cv::BriskFeatureDetector detector;//(thresh,3,1.0f);
-		cv::BRISK brisk(thresh, 3, 1.0f);
-		std::vector<cv::KeyPoint> keypoints;
-		brisk.detect( objectImg, keypoints );
 
+		std::vector<cv::KeyPoint> keypoints;
+		cv::Mat descriptors;
+
+#if CV_VERSION_MAJOR==2
+		cv::BRISK brisk(thresh, 3, 1.0f);
+		brisk.detect( objectImg, keypoints );
 
 		//-- Step 2: Calculate descriptors (feature vectors).
         //cv::BriskDescriptorExtractor extractor;
 		//cv::DescriptorExtractor * extractor = new cv::BRISK();
-		cv::Mat descriptors;
 		brisk.compute( objectImg, keypoints, descriptors);
+#elif CV_VERSION_MAJOR==3
+		cv::Ptr<cv::BRISK> brisk = cv::BRISK::create(thresh, 3, 1.0f);
+		brisk->detectAndCompute(objectImg, cv::Mat(), keypoints, descriptors);
+#endif
 
 		// Write features to the output.
 	    Types::Features features(keypoints);

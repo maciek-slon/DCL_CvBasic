@@ -62,11 +62,17 @@ void CvFAST::onNewImage()
 		// Input: a grayscale image.
 		cv::Mat input = in_img.read();
 
+
+		std::vector<KeyPoint> keypoints;
+
+#if CV_VERSION_MAJOR==2
         //-- Step 1: Detect the keypoints using FAST Detector.
         cv::FastFeatureDetector detector(m_threshold);
-		std::vector<KeyPoint> keypoints;
 		detector.detect( input, keypoints );
-
+#elif CV_VERSION_MAJOR==3
+		cv::Ptr<cv::FastFeatureDetector> fast = cv::FastFeatureDetector::create(10);
+		fast->detect(input, keypoints);
+#endif
 		// Write features to the output.
 	    Types::Features features(keypoints);
 		out_features.write(features);

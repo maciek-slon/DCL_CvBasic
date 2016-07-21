@@ -13,6 +13,10 @@
 
 #include <boost/bind.hpp>
 
+#if (CV_MAJOR_VERSION == 3)
+#include <opencv2/xfeatures2d.hpp>
+#endif
+
 
 namespace Processors {
 namespace CvFreak {
@@ -64,18 +68,23 @@ void CvFreak::onNewImage()
         cv::Mat gray;
         cvtColor(img, gray, COLOR_BGR2GRAY);
 
-        //-- Step 1: Detect the keypoints using FAST Detector.
         std::vector<KeyPoint> keypoints;
+        cv::Mat descriptors;
+#if CV_VERSION_MAJOR==2
+        //-- Step 1: Detect the keypoints using FAST Detector.
         //cv::FAST(gray,keypoints,10);
         cv::FastFeatureDetector detector(10);
         detector.detect( gray, keypoints );
 
-
-
 		//-- Step 2: Calculate descriptors (feature vectors) using Freak descriptor.
         cv::FREAK extractor;
-        cv::Mat descriptors;
         extractor.compute( gray, keypoints, descriptors);
+#elif CV_VERSION_MAJOR==3
+		cv::Ptr<cv::FastFeatureDetector> fast = cv::FastFeatureDetector::create(10);
+		fast->detect(gray, keypoints);
+		cv::Ptr<cv::xfeatures2d::FREAK> freak = cv::xfeatures2d::FREAK::create();
+		freak->compute(gray, keypoints, descriptors);
+#endif
 
 		// Write features to the output.
 	    Types::Features features(keypoints);

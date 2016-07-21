@@ -15,18 +15,8 @@
 
 #include <opencv2/opencv.hpp>
 
-#if (CV_MAJOR_VERSION == 2)
-#if (CV_MINOR_VERSION > 3)
-#include <opencv2/nonfree/features2d.hpp>
-#endif
-#endif
-
-
-
 namespace Processors {
 namespace CvSIFT {
-
-using namespace cv;
 
 /*!
  * \class CvSIFT
@@ -81,7 +71,7 @@ protected:
 	void onNewImage();
 
 	/// Input data stream
-	Base::DataStreamIn <Mat> in_img;
+	Base::DataStreamIn <cv::Mat> in_img;
 
 	/// Output data stream containing extracted features
 	Base::DataStreamOut <Types::Features> out_features;

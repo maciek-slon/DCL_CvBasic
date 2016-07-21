@@ -15,9 +15,6 @@
 #include "Types/Features.hpp"
 
 #include <opencv2/opencv.hpp>
-#include <opencv2/nonfree/features2d.hpp>
-#include <opencv2/nonfree/nonfree.hpp>
-#include <opencv2/features2d/features2d.hpp>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -85,9 +82,6 @@ protected:
 
 	/// Output data stream containing extracted features
 	Base::DataStreamOut <Types::Features> out_features;
-
-	/// Output data stream containing feature descriptors
-	Base::DataStreamOut <cv::Mat> out_descriptors;
 
 	// The maximum number of features to retain
 	Base::Property<int> nfeatures;

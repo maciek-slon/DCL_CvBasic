@@ -12,13 +12,14 @@
 
 #include <boost/bind.hpp>
 
-#if CV_MAJOR_VERSION == 2
-#if CV_MINOR_VERSION > 3
+#if (CV_MAJOR_VERSION == 2)
+#if (CV_MINOR_VERSION > 3)
 #include <opencv2/nonfree/features2d.hpp>
 #endif
-#elif CV_MAJOR_VERSION == 3
-#include <opencv2/nonfree/features2d.hpp>
+#elif (CV_MAJOR_VERSION == 3)
+#include <opencv2/xfeatures2d.hpp>
 #endif
+
 
 namespace Processors {
 namespace CvSIFT {
@@ -69,22 +70,27 @@ void CvSIFT::onNewImage()
 		// Input: a grayscale image.
 		cv::Mat input = in_img.read();
 
+	    std::vector<cv::KeyPoint> keypoints;
+		cv::Mat descriptors;
 
+#if CV_MAJOR_VERSION==2
 		//-- Step 1: Detect the keypoints.
 	    cv::SiftFeatureDetector detector;
-	    std::vector<cv::KeyPoint> keypoints;
 	    detector.detect(input, keypoints);
 
 		//-- Step 2: Calculate descriptors (feature vectors).
 		cv::SiftDescriptorExtractor extractor;
-		Mat descriptors;
 		extractor.compute( input, keypoints, descriptors);
 
+
+#elif CV_MAJOR_VERSION==3
+		cv::Ptr<cv::xfeatures2d::SIFT> sift= cv::xfeatures2d::SIFT::create();
+		sift->detectAndCompute(input, cv::Mat(), keypoints, descriptors);
+#endif
 		if (prop_scale != 1) {
 			for (int i = 0 ; i < keypoints.size(); ++i)
 				keypoints[i].pt = keypoints[i].pt * (1.0 / prop_scale);
 		}
-
 		// Write results to outputs.
 	    Types::Features features(keypoints);
 		out_features.write(features);
