@@ -9,7 +9,7 @@
 #include <string>
 
 #include "CvThreshold_Processor.hpp"
-#include "Logger.hpp"
+#include "Common/Logger.hpp"
 
 namespace Processors {
 namespace CvThreshold {

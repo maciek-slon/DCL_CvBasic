@@ -9,7 +9,7 @@
 #include <string>
 
 #include "CvMorphology_Processor.hpp"
-#include "Logger.hpp"
+#include "Common/Logger.hpp"
 
 namespace Processors {
 namespace CvMorphology {

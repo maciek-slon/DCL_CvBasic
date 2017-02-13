@@ -10,7 +10,7 @@
 #include <stdexcept>
 
 #include "CvColorConv_Processor.hpp"
-#include "Logger.hpp"
+#include "Common/Logger.hpp"
 
 namespace Processors {
 namespace CvColorConv {
@@ -78,8 +78,8 @@ void CvColorConv_Processor::onNewImage()
 		img = in_img.read();
 		cvtColor(img, out, conversion_type);
 		out_img.write(out);
-	} catch (const exception& ex) {
-		LOG(LERROR) << "CvColorConv_Processor::onNewImage() failed. " << ex.what() << endl;
+	} catch (const std::exception& ex) {
+		LOG(LERROR) << "CvColorConv_Processor::onNewImage() failed. " << ex.what() << std::endl;
 	}
 }
 

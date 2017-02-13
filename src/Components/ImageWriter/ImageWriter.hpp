@@ -7,11 +7,11 @@
 #ifndef IMAGEWRITER_HPP_
 #define IMAGEWRITER_HPP_
 
-#include "Component_Aux.hpp"
-#include "Component.hpp"
-#include "DataStream.hpp"
-#include "Property.hpp"
-#include "EventHandler2.hpp"
+#include "Base/Component_Aux.hpp"
+#include "Base/Component.hpp"
+#include "Base/DataStream.hpp"
+#include "Base/Property.hpp"
+#include "Base/EventHandler2.hpp"
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -85,9 +85,9 @@ protected:
 	/// Event handlers
 	std::vector< Base::EventHandler2* > handlers;
 
-	Base::Property<string> directory;
-	Base::Property<string> base_name;
-	Base::Property<string> format;
+	Base::Property<std::string> directory;
+	Base::Property<std::string> base_name;
+	Base::Property<std::string> format;
 	Base::Property<int> digits;
 	Base::Property<int> count;
 

@@ -79,7 +79,7 @@ void CvBRIEF::onNewImage()
 		detector.detect( gray, keypoints );
 
 
-		//-- Step 2: Calculate descriptors (feature vectors).
+		//-- Step 2: Calculate descriptors (feature vector).
 		cv::BriefDescriptorExtractor extractor(32); //this is really 32 x 8 matches since they are binary matches packed into bytes
 		extractor.compute( gray, keypoints, descriptors);
 #elif CV_VERSION_MAJOR==3

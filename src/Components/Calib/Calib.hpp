@@ -7,11 +7,11 @@
 #ifndef CALIB_HPP_
 #define CALIB_HPP_
 
-#include "Component_Aux.hpp"
-#include "Component.hpp"
-#include "DataStream.hpp"
-#include "Property.hpp"
-#include "EventHandler2.hpp"
+#include "Base/Component_Aux.hpp"
+#include "Base/Component.hpp"
+#include "Base/DataStream.hpp"
+#include "Base/Property.hpp"
+#include "Base/EventHandler2.hpp"
 #include "Types/Objects3D/Chessboard.hpp"
 #include "Types/CameraInfo.hpp"
 
@@ -104,10 +104,10 @@ protected:
 
 private:
    // The vector of vectors of the object point projections on the calibration pattern views, one vector per a view.
-	vector<vector<cv::Point2f> > imagePoints;
+	std::vector<std::vector<cv::Point2f> > imagePoints;
 
 	// The vector of vectors of points on the calibration pattern in its coordinate system, one vector per view.
-	vector<vector<cv::Point3f> > objectPoints;
+	std::vector<std::vector<cv::Point3f> > objectPoints;
 
 	cv::Size imageSize;
 

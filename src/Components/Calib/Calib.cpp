@@ -121,10 +121,10 @@ void Calib::perform_calibration()
 		// Vector with distortion coefficients k_1, k_2, p_1, p_2, k_3.
 		cv::Mat distCoeffs = cv::Mat::zeros(8, 1, CV_32F);
 
-		// The output vector of rotation vectors.
-		vector<cv::Mat> rvecs;
-		// The output vector of translation vectors.
-		vector<cv::Mat> tvecs;
+		// The outputstd::vector of rotationstd::vector.
+		std::vector<cv::Mat> rvecs;
+		// The outputstd::vector of translationstd::vector.
+		std::vector<cv::Mat> tvecs;
 
 		// Calibrate camera.
 		double errors = cv::calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoeffs, rvecs, tvecs);

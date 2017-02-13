@@ -18,9 +18,9 @@
 
 #include <sstream>
 
-#include "Component_Aux.hpp"
-#include "Component.hpp"
-#include "Property.hpp"
+#include "Base/Component_Aux.hpp"
+#include "Base/Component.hpp"
+#include "Base/Property.hpp"
 
 #include <Types/CameraInfo.hpp>
 

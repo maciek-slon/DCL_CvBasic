@@ -7,11 +7,11 @@
 #ifndef CVMOMENTS_HPP_
 #define CVMOMENTS_HPP_
 
-#include "Component_Aux.hpp"
-#include "Component.hpp"
-#include "DataStream.hpp"
-#include "Property.hpp"
-#include "EventHandler2.hpp"
+#include "Base/Component_Aux.hpp"
+#include "Base/Component.hpp"
+#include "Base/DataStream.hpp"
+#include "Base/Property.hpp"
+#include "Base/EventHandler2.hpp"
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -74,10 +74,10 @@ protected:
 	void onNewContours();
 
 	/// Input data stream
-	Base::DataStreamIn <vector<vector<Point> > > in_contours;
+	Base::DataStreamIn< std::vector<std::vector<Point> > > in_contours;
 
 	/// Output data stream containing extracted moments
-	Base::DataStreamOut <vector<Moments> > out_moments;
+	Base::DataStreamOut< std::vector<Moments> > out_moments;
 
 };
 

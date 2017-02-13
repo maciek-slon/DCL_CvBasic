@@ -9,7 +9,7 @@
 #include <string>
 
 #include "CvFilter2D_Processor.hpp"
-#include "Logger.hpp"
+#include "Common/Logger.hpp"
 
 namespace Processors {
 namespace CvFilter2D {

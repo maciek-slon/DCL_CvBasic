@@ -82,7 +82,7 @@ void CvFlann::onNewImage()
 		cv::Mat descriptors_1 = in_descriptors0.read();
 		cv::Mat descriptors_2 = in_descriptors1.read();
 
-		// Matching descriptor vectors using FLANN matcher.
+		// Matching descriptor vector using FLANN matcher.
 		FlannBasedMatcher matcher;
 		std::vector< DMatch > matches;
 		matcher.match( descriptors_1, descriptors_2, matches );
@@ -115,8 +115,8 @@ void CvFlann::onNewImage()
 		//-- Draw only "good" matches
 		Mat img_matches;
 		drawMatches( img_1, features_1.features, img_2, features_2.features,
-				   good_matches, img_matches, Scalar::all(-1), Scalar::all(-1),
-				   vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS );
+				good_matches, img_matches, Scalar::all(-1), Scalar::all(-1),
+				std::vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS );
 
 		// Print stats.
 		if (print_stats) {

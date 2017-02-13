@@ -7,11 +7,11 @@
 #ifndef CVCONTOUR_HPP_
 #define CVCONTOUR_HPP_
 
-#include "Component_Aux.hpp"
-#include "Component.hpp"
-#include "DataStream.hpp"
-#include "Property.hpp"
-#include "EventHandler2.hpp"
+#include "Base/Component_Aux.hpp"
+#include "Base/Component.hpp"
+#include "Base/DataStream.hpp"
+#include "Base/Property.hpp"
+#include "Base/EventHandler2.hpp"
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -78,7 +78,7 @@ protected:
 	Base::DataStreamIn <cv::Mat> in_img;
 
 	/// Output data stream containing extracted contours
-	Base::DataStreamOut <vector<vector<Point> > > out_contours;
+	Base::DataStreamOut <std::vector<std::vector<Point> > > out_contours;
 	Base::DataStreamOut <cv::Mat> out_img;
 	Base::DataStreamOut < std::vector<cv::Moments> > out_moments;
 	

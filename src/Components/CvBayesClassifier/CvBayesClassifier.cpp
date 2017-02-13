@@ -91,7 +91,7 @@ bool CvBayesClassifier::onStart() {
 }
 
 
-bool CvBayesClassifier::isAlreadyPresent(const vector<Moments>& dataset_, const Moments &m_)
+bool CvBayesClassifier::isAlreadyPresent(const std::vector<Moments>& dataset_, const Moments &m_)
 {
     for (std::vector<Moments>::const_iterator it = dataset_.begin(); it != dataset_.end(); ++it)
     {
@@ -158,7 +158,7 @@ void CvBayesClassifier::onNewData() {
 	CLOG(LTRACE) << "CvBayesClassifier::onNewData\n";
 	try {
 		// Read input - moments.
-		vector<Moments> m = in_moments.read();
+		std::vector<Moments> m = in_moments.read();
 
 		// Check number of features.
 		// ?
@@ -231,12 +231,12 @@ void CvBayesClassifier::onNewData() {
 	}
 }
 
-void CvBayesClassifier::prepareSampleMatrix(const vector<Moments>& vector_,cv::Mat& mat_)
+void CvBayesClassifier::prepareSampleMatrix(const std::vector<Moments>& vector_,cv::Mat& mat_)
 {
-	vector<Moments>::const_iterator it;
+	std::vector<Moments>::const_iterator it;
 	int i = 0;
-    for (it = vector_.begin(); it != vector_.end(); ++it, ++i) {
-        //std::cout << *it << ' ';
+	for (it = vector_.begin(); it != vector_.end(); ++it, ++i) {
+		//std::cout << *it << ' ';
 		if (use_spatial) {
 			mat_.at<float> (i, 0) = (float) it->m00;
 			mat_.at<float> (i, 1) = (float) it->m10;
@@ -336,7 +336,7 @@ void CvBayesClassifier::onDisplayDataset() {
 	cv::Mat train_mat = cv::Mat::zeros(training_dataset.size(), number_of_features, CV_32FC1);
 	cv::Mat resp_mat = cv::Mat::zeros(1, training_dataset.size(), CV_32FC1);
 
-//	CLOG(LNOTICE) << "Training vector:\n" << training_dataset;
+//	CLOG(LNOTICE) << "Trainingstd::vector:\n" << training_dataset;
 
 	prepareSampleMatrix(training_dataset, train_mat);
 	prepareResponseVector(resp_mat);

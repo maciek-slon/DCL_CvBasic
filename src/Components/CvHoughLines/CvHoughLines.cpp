@@ -90,7 +90,7 @@ void CvHoughLines_Processor::onNewImage()
 	}
 
 	Types::DrawableContainer c;
-	vector<Vec4i> lines;
+	std::vector<Vec4i> lines;
 	cv::HoughLinesP( image, lines, 1, CV_PI/180, threshold, minLineLength, maxLineGap);
 	CLOG(LDEBUG) << "Found " << lines.size() << " lines";
 	for( size_t i = 0; i < lines.size(); i++ )

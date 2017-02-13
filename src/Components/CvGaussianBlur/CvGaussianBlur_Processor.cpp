@@ -9,7 +9,7 @@
 #include <string>
 
 #include "CvGaussianBlur_Processor.hpp"
-#include "Logger.hpp"
+#include "Common/Logger.hpp"
 
 namespace Processors {
 namespace CvGaussianBlur {

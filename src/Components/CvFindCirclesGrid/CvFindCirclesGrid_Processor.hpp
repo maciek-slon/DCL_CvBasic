@@ -9,12 +9,12 @@
 #define CVFINDCIRCLESGRID_PROCESSOR_HPP_
 
 #include <boost/shared_ptr.hpp>
-#include "Component_Aux.hpp"
+#include "Base/Component_Aux.hpp"
 #include "Types/Objects3D/GridPattern.hpp"
 #include "Types/ImagePosition.hpp"
 #include "Types/Drawable.hpp"
-#include "Timer.hpp"
-#include "Property.hpp"
+#include "Common/Timer.hpp"
+#include "Base/Property.hpp"
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>

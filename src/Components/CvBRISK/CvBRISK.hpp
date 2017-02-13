@@ -8,10 +8,10 @@
 #ifndef CvBRISK_HPP_
 #define CvBRISK_HPP_
 
-#include "Component_Aux.hpp"
-#include "Component.hpp"
-#include "DataStream.hpp"
-#include "Property.hpp"
+#include "Base/Component_Aux.hpp"
+#include "Base/Component.hpp"
+#include "Base/DataStream.hpp"
+#include "Base/Property.hpp"
 #include "Types/Features.hpp"
 
 #include <opencv2/opencv.hpp>

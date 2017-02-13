@@ -10,7 +10,7 @@
 #include <iostream>
 
 #include "CvVideoWriter_Sink.hpp"
-#include "Logger.hpp"
+#include "Common/Logger.hpp"
 #include "Types/Drawable.hpp"
 
 namespace Sinks {

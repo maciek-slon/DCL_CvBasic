@@ -12,7 +12,7 @@
 #include <ctime>
 
 #include "CvWindow_Sink.hpp"
-#include "Logger.hpp"
+#include "Common/Logger.hpp"
 #include "Types/Drawable.hpp"
 #include "Types/DrawableContainer.hpp"
 
@@ -263,9 +263,9 @@ void CvWindow_Sink::onSaveImageN(int n) {
 
 	try {
 		// Change compression to lowest.
-	        vector<int> param;
-	        param.push_back(CV_IMWRITE_PNG_COMPRESSION);
-	        param.push_back(0); // MAX_MEM_LEVEL = 9 
+		std::vector<int> param;
+		param.push_back(CV_IMWRITE_PNG_COMPRESSION);
+		param.push_back(0); // MAX_MEM_LEVEL = 9 
 		// Save image.
 		std::string tmp_name = std::string(dir) + std::string("/") + std::string(filename) + std::string(".png");
 		imwrite(tmp_name, img[n], param);
@@ -289,7 +289,7 @@ void CvWindow_Sink::onSaveAllImages() {
 	std::strftime(buffer,80,"%Y-%m-%d-%H-%M-%S",timeinfo);
 
 	// Change compression to lowest.
-        vector<int> param;
+	std::vector<int> param;
 	param.push_back(CV_IMWRITE_PNG_COMPRESSION);
 	param.push_back(0); // MAX_MEM_LEVEL = 9 
 

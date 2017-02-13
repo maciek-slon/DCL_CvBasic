@@ -70,7 +70,7 @@ void CvSIFT::onNewImage()
 		// Input: a grayscale image.
 		cv::Mat input = in_img.read();
 
-	    std::vector<cv::KeyPoint> keypoints;
+		std::vector<cv::KeyPoint> keypoints;
 		cv::Mat descriptors;
 
 #if CV_MAJOR_VERSION==2
@@ -78,7 +78,7 @@ void CvSIFT::onNewImage()
 	    cv::SiftFeatureDetector detector;
 	    detector.detect(input, keypoints);
 
-		//-- Step 2: Calculate descriptors (feature vectors).
+		//-- Step 2: Calculate descriptors (feature vector).
 		cv::SiftDescriptorExtractor extractor;
 		extractor.compute( input, keypoints, descriptors);
 

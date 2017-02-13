@@ -89,7 +89,7 @@ void CvFindCirclesGrid_Processor::initGridPattern() {
 	gridPattern = boost::shared_ptr <GridPattern>(new GridPattern(cv::Size(prop_width, prop_height)));
 
 	// Initialize modelPoints - localization of the grid points in Cartesian space.
-	vector <Point3f> modelPoints;
+	std::vector <Point3f> modelPoints;
 
 	for( int i = 0; i < prop_height; i++ )
             for( int j = 0; j < prop_width; j++ )

@@ -8,10 +8,10 @@
 #ifndef CVSOLVEPNP_PROCESSOR_HPP_
 #define CVSOLVEPNP_PROCESSOR_HPP_
 
-#include "Component_Aux.hpp"
-#include "Component.hpp"
-#include "EventHandler.hpp"
-#include "DataStream.hpp"
+#include "Base/Component_Aux.hpp"
+#include "Base/Component.hpp"
+#include "Base/EventHandler.hpp"
+#include "Base/DataStream.hpp"
 #include "Types/Objects3D/Object3D.hpp"
 #include "Types/HomogMatrix.hpp"
 #include "Types/CameraInfo.hpp"
@@ -19,7 +19,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/calib3d/calib3d.hpp>
 
-#include "Property.hpp"
+#include "Base/Property.hpp"
 
 /**
  * \defgroup CvSolvePnP CvSolvePnP

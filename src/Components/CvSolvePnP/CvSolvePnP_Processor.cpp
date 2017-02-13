@@ -6,10 +6,10 @@
  */
 
 #include "CvSolvePnP_Processor.hpp"
-#include "Logger.hpp"
+#include "Common/Logger.hpp"
 
 #include <sstream>
-#include "Property.hpp"
+#include "Base/Property.hpp"
 #include <boost/foreach.hpp>
 
 namespace Processors {
@@ -99,7 +99,7 @@ void CvSolvePnP_Processor::onNewObject3D()
 	Mat_<double> rvec;
 
 
-//	vector<cv::Point3f> model=object3D->getModelPoints();
+//std::vector<cv::Point3f> model=object3D->getModelPoints();
 //
 //	for(int i=0; i< model.size(); i++){
 //		model[i].x += prop_X;

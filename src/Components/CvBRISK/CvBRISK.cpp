@@ -75,7 +75,7 @@ void CvBRISK::onNewImage()
 		cv::BRISK brisk(thresh, 3, 1.0f);
 		brisk.detect( objectImg, keypoints );
 
-		//-- Step 2: Calculate descriptors (feature vectors).
+		//-- Step 2: Calculate descriptors (feature vector).
         //cv::BriskDescriptorExtractor extractor;
 		//cv::DescriptorExtractor * extractor = new cv::BRISK();
 		brisk.compute( objectImg, keypoints, descriptors);

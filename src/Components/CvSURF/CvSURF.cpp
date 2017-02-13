@@ -80,7 +80,7 @@ void CvSURF::onNewImage()
 		detector.detect( input, keypoints );
 
 
-		//-- Step 2: Calculate descriptors (feature vectors).
+		//-- Step 2: Calculate descriptors (feature vector).
         SurfDescriptorExtractor extractor;
 		extractor.compute( input, keypoints, descriptors);
 #elif CV_VERSION_MAJOR==3

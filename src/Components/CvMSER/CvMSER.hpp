@@ -8,10 +8,10 @@
 #ifndef CvMSER_HPP_
 #define CvMSER_HPP_
 
-#include "Component_Aux.hpp"
-#include "Component.hpp"
-#include "DataStream.hpp"
-#include "Property.hpp"
+#include "Base/Component_Aux.hpp"
+#include "Base/Component.hpp"
+#include "Base/DataStream.hpp"
+#include "Base/Property.hpp"
 #include "Types/Features.hpp"
 
 #include <opencv2/opencv.hpp>
@@ -86,7 +86,7 @@ protected:
 	Base::DataStreamIn <cv::Mat> in_img;
 
 	/// Output data stream containing extracted contours
-	Base::DataStreamOut <vector<vector<Point> > > out_contours;
+	Base::DataStreamOut <std::vector<std::vector<Point> > > out_contours;
 	Base::DataStreamOut <cv::Mat> out_img;
 };
 

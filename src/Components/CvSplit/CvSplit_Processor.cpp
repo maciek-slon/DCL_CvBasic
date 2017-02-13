@@ -9,7 +9,7 @@
 #include <string>
 
 #include "CvSplit_Processor.hpp"
-#include "Logger.hpp"
+#include "Common/Logger.hpp"
 
 #include <boost/lexical_cast.hpp>
 

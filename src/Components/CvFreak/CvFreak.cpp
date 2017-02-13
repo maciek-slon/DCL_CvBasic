@@ -76,7 +76,7 @@ void CvFreak::onNewImage()
         cv::FastFeatureDetector detector(10);
         detector.detect( gray, keypoints );
 
-		//-- Step 2: Calculate descriptors (feature vectors) using Freak descriptor.
+		//-- Step 2: Calculate descriptors (feature vector) using Freak descriptor.
         cv::FREAK extractor;
         extractor.compute( gray, keypoints, descriptors);
 #elif CV_VERSION_MAJOR==3

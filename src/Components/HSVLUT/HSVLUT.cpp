@@ -92,7 +92,7 @@ void HSVLUT::onNewImage()
 		tmp_img.create(size, CV_8UC1);
 
 		// Check the arrays for continuity and, if this is the case,
-		// treat the arrays as 1D vectors
+		// treat the arrays as 1D vector
 		if (rgb_img.isContinuous() && tmp_img.isContinuous()) {
 			size.width *= size.height;
 			size.height = 1;

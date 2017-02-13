@@ -120,7 +120,7 @@ void CvFindChessboardCorners_Processor::initChessboard() {
 	chessboard = boost::shared_ptr<Chessboard>(new Chessboard(cv::Size(prop_width, prop_height)));
 
 	// Initialize modelPoints - localization of the chessboard corners in Cartesian space.
-	vector<Point3f> modelPoints;
+	std::vector<Point3f> modelPoints;
 	for (int i = 0; i < prop_height; ++i) {
 		for (int j = 0; j < prop_width; ++j) {
 			modelPoints.push_back(Point3f(-j * prop_square_height, -i * prop_square_width, 0));

@@ -64,7 +64,7 @@ void CvMSER::onNewImage()
 		cv::Mat yuv,gray;
 		cvtColor(img,yuv, COLOR_BGR2YCrCb);
 		cvtColor(img, gray, COLOR_BGR2GRAY);
-		vector<vector<Point> > regions;
+		std::vector<std::vector<Point> > regions;
 		std::vector< Rect > bboxes;
 		cv::Ptr<cv::MSER> ms = cv::MSER::create();
 		ms->detectRegions(img, regions, bboxes);
