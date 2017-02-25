@@ -31,7 +31,7 @@ CvFindChessboardCorners_Processor::CvFindChessboardCorners_Processor(const std::
 
 		prop_fastCheck("flags.fast_check", true),
 		prop_filterQuads("flags.filter_quads", true),
-		prop_adaptiveThreshold("flags.adaptive_treshold", true),
+		prop_adaptiveThreshold("flags.adaptive_threshold", true),
 		prop_normalizeImage("flags.normalize_image", true),
 
 		prop_interpolation_type("scale.interpolation_type", INTER_NEAREST, "combo")

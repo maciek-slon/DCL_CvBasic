@@ -66,25 +66,11 @@ protected:
 	bool onStop();
 
 	// Data streams
-	Base::DataStreamIn<Types::Objects3D::Object3D> in_object3D;
+	Base::DataStreamIn<Types::Objects3D::Object3D, Base::DataStreamBuffer::Newest> in_object3D;
 
 	Base::DataStreamIn< Types::CameraInfo > in_camerainfo;
 
 	Base::DataStreamOut< Types::CameraInfo > out_camerainfo;
-
-	// Handlers
-
-	// Handler activated when datastream chessboard is present.
-	Base::EventHandler2 h_process_object3D;
-
-	// Handler activated a calibration computations should be performed.
-	Base::EventHandler2 h_perform_calibration;
-
-	// Handler activated when user will trigger "add object3D"
-	Base::EventHandler2 h_add_object3D;
-
-	// Handler activated when user will trigger "clear whole dataset"
-	Base::EventHandler2 h_clear_dataset;
 
 	// Adds received chessboard observation to calibration set.
 	void process_object3D();

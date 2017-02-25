@@ -183,7 +183,7 @@ void Sequence::onLoadImage() {
 	CLOG(LDEBUG) << "After: index=" << index << " previous_index=" << previous_index ;
 
 	try {
-		CLOG(LNOTICE) << "Returning image (" << index << "): " << files[index] ;
+		CLOG(LINFO) << "Returning image (" << index << "): " << files[index] ;
 		if (index == previous_index) {
 			CLOG(LDEBUG) << "Returning previous image";
 			// There is no need to load the image - return stored one.
@@ -219,12 +219,14 @@ void Sequence::onTriggeredLoadNextImage(){
 	CLOG(LDEBUG) << "onTriggeredLoadNextImage - next image from the sequence will be loaded";
 	in_next_image_trigger.read();
 	next_image_flag = true;
+	publish_image_flag = true;
 }
 
 
 void Sequence::onLoadNextImage(){
 	CLOG(LDEBUG) << "onLoadNextImage - next image from the sequence will be loaded";
 	next_image_flag = true;
+	publish_image_flag = true;
 }
 
 
@@ -238,12 +240,14 @@ void Sequence::onTriggeredLoadPrevImage(){
 	CLOG(LDEBUG) << "onTriggeredLoadPrevImage - prev image from the sequence will be loaded";
 	in_prev_image_trigger.read();
 	prev_image_flag = true;
+	publish_image_flag = true;
 }
 
 
 void Sequence::onLoadPrevImage(){
 	CLOG(LDEBUG) << "onLoadPrevImage - prev image from the sequence will be loaded";
 	prev_image_flag = true;
+	publish_image_flag = true;
 }
 
 

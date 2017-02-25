@@ -95,7 +95,7 @@ void CvWindow_Sink::prepareInterface() {
 	registerHandler("onSaveAllImages", boost::bind(&CvWindow_Sink::onSaveAllImages, this));
 
 	// register aliases for first handler and streams
-	registerHandler("onNewImage", boost::bind(&CvWindow_Sink::onNewImageN, this, 0));
+	//registerHandler("onNewImage", boost::bind(&CvWindow_Sink::onNewImageN, this, 0));
 	registerStream("in_img", in_img[0]);
 	registerStream("in_draw", in_draw[0]);
 
