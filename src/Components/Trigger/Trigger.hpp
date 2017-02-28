@@ -67,18 +67,23 @@ protected:
 
 	// Output data streams
 	Base::DataStreamOut<Base::UnitType> out_trigger;
+	
+	std::vector<Base::DataStreamOut<Base::UnitType> * > out_triggers;
 
 	/// Inputy event - stop auto triggering.
 	Base::DataStreamIn<Base::UnitType, Base::DataStreamBuffer::Newest> in_stop_auto_trigger;
 
 	/// Auto-trigger - sends a trigger in every step.
 	Base::Property<bool> prop_auto_trigger;
+	Base::Property<std::string> prop_triggers;
 
 	/// Flag indicating whether the trigger button was pressed.
 	bool triggered_flag;
 
 	/// Activates trigger when button is pressed.
 	void onTriggerButtonPressed();
+	
+	void onTriggerN(int id);
 
 	/// Sends trigger when component is activated if auto-trigger property is set to true.
 	void onAutoTrigger();
