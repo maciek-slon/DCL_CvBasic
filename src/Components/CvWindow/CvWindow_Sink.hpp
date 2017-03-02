@@ -191,8 +191,7 @@ protected:
 			Base::Synchronization::Mutex> *> in_img;
 
 	/// Additional data to draw
-	std::vector<Base::DataStreamInPtr<Types::Drawable> *>
-			in_draw;
+	std::vector<Base::DataStreamInPtr<Types::Drawable> *> in_draw;
 
 	/// Image to be drawn.
 	std::vector<cv::Mat> img;
@@ -227,6 +226,8 @@ protected:
 	Base::Property<int> grid_step_y;
 	Base::Property<int> grid_offset_x;
 	Base::Property<int> grid_offset_y;
+	
+	Base::Property<bool> force_color;
 };
 
 }//: namespace CvWindow

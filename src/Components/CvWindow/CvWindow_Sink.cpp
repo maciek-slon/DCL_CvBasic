@@ -35,7 +35,8 @@ CvWindow_Sink::CvWindow_Sink(const std::string & name) :
 			grid_step_x("grid.step_x", 640),
 			grid_step_y("grid.step_y", 510),
 			grid_offset_x("grid.offset_x", 0),
-			grid_offset_y("grid.offset_y", 0)
+			grid_offset_y("grid.offset_y", 0),
+			force_color("force_color", true)
 {
 	CLOG(LTRACE) << "Hello CvWindow_Sink\n";
 
@@ -56,6 +57,8 @@ CvWindow_Sink::CvWindow_Sink(const std::string & name) :
 	registerProperty(grid_step_y);
 	registerProperty(grid_offset_x);
 	registerProperty(grid_offset_y);
+	
+	registerProperty(force_color);
 }
 
 CvWindow_Sink::~CvWindow_Sink() {
@@ -191,6 +194,9 @@ void CvWindow_Sink::onNewImageN(int n) {
 	try {
 		if (!in_img[n]->empty()) {
 			img[n] = in_img[n]->read().clone();
+			if (force_color && img[n].channels() == 1) {
+				cv::cvtColor(img[n], img[n], CV_GRAY2BGR);
+			}
 		}
 
 		if (to_draw_timeout[n])
