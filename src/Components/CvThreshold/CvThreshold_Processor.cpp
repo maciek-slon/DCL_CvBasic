@@ -17,7 +17,9 @@ namespace CvThreshold {
 CvThreshold_Processor::CvThreshold_Processor(const std::string & name) : Base::Component(name),
 		m_type("type", THRESH_BINARY, "combo"),
 		m_thresh("thresh", 128, "range"),
-		m_maxval("maxval", 255, "range")
+		m_maxval("maxval", 255, "range"),
+		m_otsu("Otsu", false),
+		m_pass("pass_through", false)
 {
 	LOG(LTRACE) << "Hello CvThreshold_Processor\n";
 
@@ -40,6 +42,8 @@ CvThreshold_Processor::CvThreshold_Processor(const std::string & name) : Base::C
 	registerProperty(m_type);
 	registerProperty(m_thresh);
 	registerProperty(m_maxval);
+	registerProperty(m_otsu);
+	registerProperty(m_pass);
 }
 
 CvThreshold_Processor::~CvThreshold_Processor()
@@ -88,10 +92,17 @@ void CvThreshold_Processor::onNewImage()
 {
 	LOG(LNOTICE) << "CvThreshold_Processor::onNewImage\n";
 	try {
+		double thr = m_thresh;
 		cv::Mat img = in_img.read();
-		cv::Mat out = img.clone();
-		LOG(LTRACE) << "Threshold " << m_thresh;
-		cv::threshold(img, out, m_thresh, m_maxval, m_type);
+		cv::Mat out;
+		if (m_pass)
+			out = img.clone();
+		else if (m_otsu)
+			thr = cv::threshold(img, out, m_thresh, m_maxval, m_type + THRESH_OTSU);
+		else
+			cv::threshold(img, out, m_thresh, m_maxval, m_type);
+			
+		CLOG(LTRACE) << "Threshold " << thr;
 		out_img.write(out);
 	} catch (...) {
 		LOG(LERROR) << "CvThreshold::onNewImage failed\n";

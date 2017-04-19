@@ -228,6 +228,8 @@ protected:
 	Base::Property<int> grid_offset_y;
 	
 	Base::Property<bool> force_color;
+	
+	bool windows_created;
 };
 
 }//: namespace CvWindow

@@ -174,6 +174,8 @@ private:
 
 	Base::Property<double> m_thresh;
 	Base::Property<double> m_maxval;
+	Base::Property<bool> m_otsu;
+	Base::Property<bool> m_pass;
 };
 
 }//: namespace CvThreshold

@@ -94,9 +94,11 @@ void CameraOpenCV_Source::onGrabFrame() {
 	if (!valid)
 		return;
 
-	if (m_triggered && !trig)
+	if (m_triggered && !trig) {
+		if (!frame.empty()) out_img.write(frame);
 		return;
-
+	}
+	
 	trig = false;
 	cap >> frame;
 

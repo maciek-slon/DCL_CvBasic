@@ -25,9 +25,9 @@ CvGaussianBlur_Processor::CvGaussianBlur_Processor(const std::string & name) : B
 	sigmay.setToolTip("Gaussian kernel standard deviation in Y direction");
 
 	kernel_width.addConstraint("0");
-	kernel_width.addConstraint("10");
+	kernel_width.addConstraint("20");
 	kernel_height.addConstraint("0");
-	kernel_height.addConstraint("10");
+	kernel_height.addConstraint("20");
 
 	// Register properties.
 	registerProperty(sigmax);
@@ -89,13 +89,13 @@ bool CvGaussianBlur_Processor::onStart()
 
 void CvGaussianBlur_Processor::onNewImage()
 {
-	LOG(LTRACE) << "CvGaussianBlur_Processor::onNewImage\n";
+	CLOG(LTRACE) << "CvGaussianBlur_Processor::onNewImage\n";
 	try {
-		cv::Mat img = in_img.read();
-		cv::GaussianBlur(img, img, cv::Size(kernel_width, kernel_height), sigmax, sigmay);
+		cv::Mat img = in_img.read().clone();
+		cv::GaussianBlur(img, img, cv::Size(kernel_width*2+1, kernel_height*2+1), sigmax, sigmay);
 		out_img.write(img);
 	} catch (...) {
-		LOG(LERROR) << "CvGaussianBlur_Processor::onNewImage failed\n";
+		CLOG(LERROR) << "CvGaussianBlur_Processor::onNewImage failed\n";
 	}
 }
 

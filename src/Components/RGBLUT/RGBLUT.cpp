@@ -108,9 +108,9 @@ void RGBLUT::onNewImage()
 
 			int j, k = 0;
 			for (j = 0; j < size.width; j += 3) {
-				uchar r = rgb_p[j];
+				uchar b = rgb_p[j];
 				uchar g = rgb_p[j + 1];
-				uchar b = rgb_p[j + 2];
+				uchar r = rgb_p[j + 2];
 
 				uchar val = 255;
 				//  Red.

@@ -16,20 +16,33 @@ namespace CvMorphology {
 
 CvMorphology_Processor::CvMorphology_Processor(const std::string & name) : Base::Component(name),
 		iterations("iterations", 1, "range"),
-        type("type", MORPH_OPEN, "combo")
+        type("type", MORPH_OPEN, "combo"),
+        element("element", std::string("RECT"), "combo"),
+        elem_size("element_size", 1, "range")
 {
 	LOG(LTRACE) << "Hello CvMorphology_Processor\n";
 
 	iterations.addConstraint("0");
-	iterations.addConstraint("255");
+	iterations.addConstraint("15");
 	registerProperty(iterations);
 
+	type.addConstraint("MORPH_ERODE");
+	type.addConstraint("MORPH_DILATE");
 	type.addConstraint("MORPH_OPEN");
 	type.addConstraint("MORPH_CLOSE");
 	type.addConstraint("MORPH_GRADIENT");
 	type.addConstraint("MORPH_TOPHAT");
 	type.addConstraint("MORPH_BLACKHAT");
 	registerProperty(type);
+	
+	element.addConstraint("RECT");
+	element.addConstraint("ELLIPSE");
+	element.addConstraint("CROSS");
+	registerProperty(element);
+	
+	elem_size.addConstraint("1");
+	elem_size.addConstraint("10");
+	registerProperty(elem_size);
 }
 
 CvMorphology_Processor::~CvMorphology_Processor()
@@ -82,7 +95,17 @@ void CvMorphology_Processor::onNewImage()
 	try {
         cv::Mat in = in_img.read();
         cv::Mat out = in.clone();
-        cv::morphologyEx(in, out, type, cv::Mat(), Point(-1, -1), iterations);
+        int elem_type = MORPH_RECT;
+        if (element == "RECT") elem_type = MORPH_RECT;
+        else if (element == "ELLIPSE") elem_type = MORPH_ELLIPSE;
+        else if (element == "CROSS") elem_type = MORPH_CROSS;
+        cv::Mat el = getStructuringElement(elem_type, cv::Size(elem_size*2+1, elem_size*2+1));
+        if (type == MORPH_ERODE)
+			cv::erode(in, out, el, cv::Point(-1, -1), iterations);
+		else if (type == MORPH_DILATE)
+			cv::dilate(in, out, el, cv::Point(-1, -1), iterations);
+		else
+			cv::morphologyEx(in, out, type, el, Point(-1, -1), iterations);
         out_img.write(out);
 	} catch (...) {
 		LOG(LERROR) << "CvMorphology_Processor::onNewImage failed\n";

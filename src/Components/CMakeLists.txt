@@ -90,3 +90,21 @@ ADD_COMPONENT(DrawCoordinateSystem)
 ADD_COMPONENT(FindHomography)
 
 ADD_COMPONENT(RotateImage)
+
+ADD_COMPONENT(CalcHist)
+
+ADD_COMPONENT(BrightnessContrast)
+
+ADD_COMPONENT(ColorVis)
+
+ADD_COMPONENT(Median)
+
+ADD_COMPONENT(BoxBlur)
+
+ADD_COMPONENT(BilateralFilter)
+
+ADD_COMPONENT(Sobel)
+
+ADD_COMPONENT(Scharr)
+
+ADD_COMPONENT(ShapeDetector)

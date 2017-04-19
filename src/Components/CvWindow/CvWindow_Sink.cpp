@@ -36,7 +36,8 @@ CvWindow_Sink::CvWindow_Sink(const std::string & name) :
 			grid_step_y("grid.step_y", 510),
 			grid_offset_x("grid.offset_x", 0),
 			grid_offset_y("grid.offset_y", 0),
-			force_color("force_color", true)
+			force_color("force_color", true),
+			windows_created(false)
 {
 	CLOG(LTRACE) << "Hello CvWindow_Sink\n";
 
@@ -157,6 +158,7 @@ bool CvWindow_Sink::onInit() {
 		
 		cv::setMouseCallback(titles[i], &CvWindow_Sink::onMouseStatic, cbi);
 	}
+	windows_created = true;
 	CLOG(LTRACE) << "CvWindow_Sink::initialize done\n";
 	return true;
 }
@@ -249,11 +251,11 @@ void CvWindow_Sink::onRefresh() {
 
 void CvWindow_Sink::onTitleChanged(const std::string & old_title,
 		const std::string & new_title) {
-	std::cout << "onTitleChanged: " << new_title << std::endl;
 
 #if CV_MAJOR_VERSION<2 || CV_MINOR_VERSION<2
 	CLOG(LDEBUG) << "Changing window title not supported";
 #else
+	if (!windows_created) return;
 	for (int i = 0; i < count; ++i) {
 		char id = '0' + i;
 		try {

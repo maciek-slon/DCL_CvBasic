@@ -22,7 +22,7 @@ CvAdaptiveThreshold_Processor::CvAdaptiveThreshold_Processor(const std::string &
 	blockSize("blockSize", 5, "range"),
 	C("C", 3, "range")
 {
-	LOG(LTRACE) << "Hello CvAdaptiveThreshold_Processor\n";
+	CLOG(LTRACE) << "Hello CvAdaptiveThreshold_Processor\n";
 
 	method.addConstraint("ADAPTIVE_THRESH_MEAN_C");
 	method.addConstraint("ADAPTIVE_THRESH_GAUSSIAN_C");
@@ -30,7 +30,7 @@ CvAdaptiveThreshold_Processor::CvAdaptiveThreshold_Processor(const std::string &
 	thresholdType.addConstraint("THRESH_BINARY_INV");
 	maxValue.addConstraint("0");
 	maxValue.addConstraint("255");
-	blockSize.addConstraint("0");
+	blockSize.addConstraint("1");
 	blockSize.addConstraint("10");
 	C.addConstraint("0");
 	C.addConstraint("255");
@@ -45,7 +45,7 @@ CvAdaptiveThreshold_Processor::CvAdaptiveThreshold_Processor(const std::string &
 
 CvAdaptiveThreshold_Processor::~CvAdaptiveThreshold_Processor()
 {
-	LOG(LTRACE) << "Good bye CvAdaptiveThreshold_Processor\n";
+	CLOG(LTRACE) << "Good bye CvAdaptiveThreshold_Processor\n";
 }
 
 void CvAdaptiveThreshold_Processor::prepareInterface() {
@@ -60,14 +60,14 @@ void CvAdaptiveThreshold_Processor::prepareInterface() {
 
 bool CvAdaptiveThreshold_Processor::onInit()
 {
-	LOG(LTRACE) << "CvAdaptiveThreshold_Processor::initialize\n";
+	CLOG(LTRACE) << "CvAdaptiveThreshold_Processor::initialize\n";
 
 	return true;
 }
 
 bool CvAdaptiveThreshold_Processor::onFinish()
 {
-	LOG(LTRACE) << "CvAdaptiveThreshold_Processor::finish\n";
+	CLOG(LTRACE) << "CvAdaptiveThreshold_Processor::finish\n";
 
 	return true;
 }
@@ -92,7 +92,7 @@ void CvAdaptiveThreshold_Processor::onNewImage()
 	} else if (method() == "ADAPTIVE_THRESH_GAUSSIAN_C") {
 		aM = ADAPTIVE_THRESH_GAUSSIAN_C;
 	} else {
-		LOG(LFATAL) << name() << ": CvAdaptiveThreshold_Processor: adaptiveMethod is wrong (" << method() << ")";
+		CLOG(LWARNING) << name() << ": CvAdaptiveThreshold_Processor: adaptiveMethod is wrong (" << method() << ")";
 	}
 
 	int tT = 0;
@@ -101,7 +101,7 @@ void CvAdaptiveThreshold_Processor::onNewImage()
 	} else if (thresholdType() == "THRESH_BINARY_INV") {
 		tT = THRESH_BINARY_INV;
 	} else {
-		LOG(LFATAL) << name() << ": CvAdaptiveThreshold_Processor: thresholdType is wrong (" << thresholdType()
+		CLOG(LWARNING) << name() << ": CvAdaptiveThreshold_Processor: thresholdType is wrong (" << thresholdType()
 				<< ")";
 	}
 

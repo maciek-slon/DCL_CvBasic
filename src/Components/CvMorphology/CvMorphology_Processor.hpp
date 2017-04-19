@@ -72,6 +72,8 @@ class MorphTranslator {
 public:
 	static int fromStr(const std::string & s)
 	{
+		if (s == "MORPH_ERODE")    return MORPH_ERODE;
+		if (s == "MORPH_DILATE")   return MORPH_DILATE;
 		if (s == "MORPH_BLACKHAT") return MORPH_BLACKHAT;
 		if (s == "MORPH_CLOSE")	   return MORPH_CLOSE;
 		if (s == "MORPH_GRADIENT") return MORPH_GRADIENT;
@@ -83,6 +85,8 @@ public:
 	static std::string toStr(int t)
 	{
 		switch(t) {
+			case MORPH_ERODE:    return "MORPH_ERODE";
+			case MORPH_DILATE:   return "MORPH_DILATE";
 			case MORPH_OPEN:     return "MORPH_OPEN";
 			case MORPH_CLOSE:    return "MORPH_CLOSE";
 			case MORPH_GRADIENT: return "MORPH_GRADIENT";
@@ -159,7 +163,10 @@ private:
 	Base::Property<int> iterations;
 
 	Base::Property<int, MorphTranslator> type;
-
+	
+	Base::Property<std::string> element;
+	
+	Base::Property<int> elem_size;
 
 };
 
