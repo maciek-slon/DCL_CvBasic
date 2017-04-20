@@ -116,7 +116,7 @@ void CalcHist::onNewImage() {
 	CLOG(LTRACE) << "CalcHist::onNewImage";
 		/// Display
 		cv::imshow("calcHist Demo", histImage );
-		cv::waitKey(3);
+		cv::waitKey(10);
 
 	CLOG(LTRACE) << "CalcHist::onNewImage done";
 	} catch (...) {

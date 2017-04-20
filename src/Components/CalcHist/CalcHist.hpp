@@ -68,7 +68,7 @@ protected:
 
 	void onNewImage();
 
-	Base::DataStreamIn<cv::Mat> in_img;
+	Base::DataStreamIn<cv::Mat, Base::DataStreamBuffer::Newest> in_img;
 
 };
 
