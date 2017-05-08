@@ -20,7 +20,7 @@ public:
 
 	virtual ~Rectangle() {}
 
-	virtual void draw(cv::Mat & image, CvScalar color, int offsetX = 0, int offsetY = 0) {
+	virtual void draw(cv::Mat & image, cv::Scalar color, int offsetX = 0, int offsetY = 0) {
 		cv::rectangle(image, p1, p2, color, 2);
 	}
 

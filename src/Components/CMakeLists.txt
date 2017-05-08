@@ -108,3 +108,9 @@ ADD_COMPONENT(Sobel)
 ADD_COMPONENT(Scharr)
 
 ADD_COMPONENT(ShapeDetector)
+
+ADD_COMPONENT(Hist2D)
+
+ADD_COMPONENT(MaskGenerator)
+
+ADD_COMPONENT(HistObjectDetector)
