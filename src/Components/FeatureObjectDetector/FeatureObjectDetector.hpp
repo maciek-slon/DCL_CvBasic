@@ -1,11 +1,11 @@
 /*!
  * \file
  * \brief 
- * \author Maciej
+ * \author Maciej Stefanczyk
  */
 
-#ifndef MASKGENERATOR_HPP_
-#define MASKGENERATOR_HPP_
+#ifndef FEATUREOBJECTDETECTOR_HPP_
+#define FEATUREOBJECTDETECTOR_HPP_
 
 #include "Base/Component_Aux.hpp"
 #include "Base/Component.hpp"
@@ -13,31 +13,32 @@
 #include "Base/Property.hpp"
 #include "Base/EventHandler2.hpp"
 
-#include "Types/Rectangle.hpp"
-
 #include <opencv2/opencv.hpp>
+#include <opencv2/xfeatures2d.hpp>
 
+#include <map>
+#include <mutex>
 
 namespace Processors {
-namespace MaskGenerator {
+namespace FeatureObjectDetector {
 
 /*!
- * \class MaskGenerator
- * \brief MaskGenerator processor class.
+ * \class FeatureObjectDetector
+ * \brief FeatureObjectDetector processor class.
  *
  * 
  */
-class MaskGenerator: public Base::Component {
+class FeatureObjectDetector: public Base::Component {
 public:
 	/*!
 	 * Constructor.
 	 */
-	MaskGenerator(const std::string & name = "MaskGenerator");
+	FeatureObjectDetector(const std::string & name = "FeatureObjectDetector");
 
 	/*!
 	 * Destructor
 	 */
-	virtual ~MaskGenerator();
+	virtual ~FeatureObjectDetector();
 
 	/*!
 	 * Prepare components interface (register streams and handlers).
@@ -71,30 +72,35 @@ protected:
 
 	// Input data streams
 	Base::DataStreamIn<cv::Mat, Base::DataStreamBuffer::Newest> in_img;
+	Base::DataStreamIn<cv::Mat, Base::DataStreamBuffer::Newest> in_roi;
 
 	// Output data streams
-	Base::DataStreamOut<cv::Mat> out_mask;
-	Base::DataStreamOut<Types::Rectangle> out_draw;
-	Base::DataStreamOut<cv::Mat> out_roi;
+	Base::DataStreamOut<cv::Mat> out_img;
+
+	// Handlers
 
 	// Properties
-	Base::Property<int> cx;
-	Base::Property<int> cy;
-	Base::Property<int> sx;
-	Base::Property<int> sy;
+	Base::Property<std::string> object_name;
+	Base::Property<int> threshold;
 
 	
 	// Handlers
-	void generate();
+	void onNewImage();
+	void clearObjects();
+	void updateObject();
 
+	std::map<std::string, cv::Mat> known_objects;
+	
+	
+	std::mutex map_mutex;
 };
 
-} //: namespace MaskGenerator
+} //: namespace FeatureObjectDetector
 } //: namespace Processors
 
 /*
  * Register processor component.
  */
-REGISTER_COMPONENT("MaskGenerator", Processors::MaskGenerator::MaskGenerator)
+REGISTER_COMPONENT("FeatureObjectDetector", Processors::FeatureObjectDetector::FeatureObjectDetector)
 
-#endif /* MASKGENERATOR_HPP_ */
+#endif /* FEATUREOBJECTDETECTOR_HPP_ */

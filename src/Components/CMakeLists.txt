@@ -114,3 +114,5 @@ ADD_COMPONENT(Hist2D)
 ADD_COMPONENT(MaskGenerator)
 
 ADD_COMPONENT(HistObjectDetector)
+
+ADD_COMPONENT(FeatureObjectDetector)

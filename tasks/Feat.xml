@@ -21,12 +21,11 @@
 				</Component>
 				
 				<Component name="Mask" type="CvBasic:MaskGenerator" priority="2">
+					<param name="sx">150</param>
+					<param name="sy">200</param>
 				</Component>
 				
-				<Component name="Hist" type="CvBasic:Hist2D" priority="10">
-				</Component>
-				
-				<Component name="Detector" type="CvBasic:HistObjectDetector" priority="20">
+				<Component name="Detector" type="CvBasic:FeatureObjectDetector" priority="20">
 				</Component>
 			</Executor>
 		</Subtask>
@@ -34,8 +33,8 @@
 		<Subtask name="Visualisation">
 			<Executor name="Exec2" period="0.05">
 				<Component name="Window" type="CvBasic:CvWindow" priority="1" bump="0">
-					<param name="count">3</param>
-					<param name="title">In,Hist,Back</param>
+					<param name="count">2</param>
+					<param name="title">In,Out</param>
 				</Component>
 			</Executor>
 		</Subtask>
@@ -44,33 +43,21 @@
 	<!-- pipes connecting datastreams -->
 	<DataStreams>
 		<Source name="Source.out_img">
-			<sink>Hist.in_img</sink>
+			<sink>Detector.in_img</sink>
 			<sink>Mask.in_img</sink>
 			<sink>Window.in_img0</sink>
 		</Source>
 		
-		<Source name="Mask.out_mask">
-			<sink>Hist.in_mask</sink>
+		<Source name="Mask.out_roi">
+			<sink>Detector.in_roi</sink>
 		</Source>
 		
 		<Source name="Mask.out_draw">
 			<sink>Window.in_draw0</sink>
 		</Source>
 		
-		<Source name="Hist.out_img">
-			<sink>Window.in_img2</sink>
-		</Source>
-		
-		<Source name="Hist.out_hist_img">
+		<Source name="Detector.out_img">
 			<sink>Window.in_img1</sink>
-		</Source>
-		
-		<Source name="Hist.out_hist">
-			<sink>Detector.in_hist</sink>
-		</Source>
-		
-		<Source name="Detector.out_result">
-			<sink>Window.in_draw0</sink>
 		</Source>
 	</DataStreams>
 </Task>
