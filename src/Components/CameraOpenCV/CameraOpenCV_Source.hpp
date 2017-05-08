@@ -92,6 +92,8 @@ protected:
 	Base::Property<int> m_width;
 	Base::Property<int> m_height;
 	Base::Property<bool> m_triggered;
+	Base::Property<bool> m_flip_x;
+
 
 	void onDeviceCahnged(int old_device, int new_device);
 

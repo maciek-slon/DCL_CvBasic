@@ -19,7 +19,8 @@ CameraOpenCV_Source::CameraOpenCV_Source(const std::string & name) : Base::Compo
 		m_device("device", boost::bind(&CameraOpenCV_Source::onDeviceCahnged, this, _1, _2), 0),
 		m_width("width", 640, "combo"),
 		m_height("width", 480, "combo"),
-		m_triggered("triggered", false)
+		m_triggered("triggered", false),
+		m_flip_x("flip_x", false)
 {
 	LOG(LTRACE) << "CameraOpenCV_Source::CameraOpenCV_Source()\n";
 	trig = true;
@@ -35,6 +36,8 @@ CameraOpenCV_Source::CameraOpenCV_Source(const std::string & name) : Base::Compo
 	registerProperty(m_height);
 
 	registerProperty(m_triggered);
+	
+	registerProperty(m_flip_x);
 
 	valid = false;
 }
@@ -108,7 +111,13 @@ void CameraOpenCV_Source::onGrabFrame() {
 
 	LOG(LTRACE) << "CameraOpenCV: got frame!\n";
 
-	out_img.write(frame);
+	cv::Mat out;
+	if (m_flip_x)
+		cv::flip(frame, out, 1);
+	else
+		out = frame;
+
+	out_img.write(out);
 
 }
 
