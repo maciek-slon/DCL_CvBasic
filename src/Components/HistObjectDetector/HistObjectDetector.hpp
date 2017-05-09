@@ -84,9 +84,11 @@ protected:
 	// Handlers
 	void onNewData();
 	void updateObject();
+	void clearObjects();
 
 
 	std::string object_to_update;
+	bool clear_flag;
 	
 	std::map<std::string, cv::Mat> known_objects;
 };

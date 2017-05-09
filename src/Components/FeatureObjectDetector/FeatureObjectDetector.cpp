@@ -179,7 +179,8 @@ void FeatureObjectDetector::clearObjects() {
 
 void FeatureObjectDetector::updateObject() {
 	std::lock_guard<std::mutex> lock(map_mutex);
-	if (known_objects.size() >= 4) return;
+	
+	if (known_objects.count(object_name) < 1 && known_objects.size() >= 4) return;
 	
 	if (!in_roi.empty())
 		known_objects[object_name] = in_roi.read().clone();

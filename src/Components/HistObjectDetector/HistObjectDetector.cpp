@@ -19,6 +19,7 @@ HistObjectDetector::HistObjectDetector(const std::string & name) :
 		Base::Component(name) , 
 		object_name("object_name", std::string("object_1")) {
 	registerProperty(object_name);
+	clear_flag = false;
 
 }
 
@@ -33,6 +34,7 @@ void HistObjectDetector::prepareInterface() {
 	registerHandler("onNewData", boost::bind(&HistObjectDetector::onNewData, this));
 	addDependency("onNewData", &in_hist);
 	registerHandler("updateObject", boost::bind(&HistObjectDetector::updateObject, this));
+	registerHandler("clearObjects", boost::bind(&HistObjectDetector::clearObjects, this));
 
 }
 
@@ -55,6 +57,12 @@ bool HistObjectDetector::onStart() {
 
 void HistObjectDetector::onNewData() {
 	cv::Mat hist = in_hist.read();
+	
+	if (clear_flag) {
+		clear_flag = false;
+		known_objects.clear();
+	}
+	
 	if (!object_to_update.empty()) {
 		known_objects[object_to_update] = hist;
 		object_to_update = "";
@@ -80,6 +88,10 @@ void HistObjectDetector::onNewData() {
 
 void HistObjectDetector::updateObject() {
 	object_to_update = object_name;
+}
+
+void HistObjectDetector::clearObjects() {
+	clear_flag = true;
 }
 
 
