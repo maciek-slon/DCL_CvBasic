@@ -73,6 +73,7 @@ protected:
 
 	// Output data streams
 	Base::DataStreamOut<cv::Mat> out_img;
+	Base::DataStreamOut<std::vector<float> > out_ball;
 
 	// Handlers
 

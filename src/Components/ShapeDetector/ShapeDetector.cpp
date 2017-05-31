@@ -40,6 +40,7 @@ void ShapeDetector::prepareInterface() {
 	registerStream("in_contours", &in_contours);
 	registerStream("in_img", &in_img);
 	registerStream("out_img", &out_img);
+	registerStream("out_ball", &out_ball);
 	// Register handlers
 	registerHandler("onNewData", boost::bind(&ShapeDetector::onNewData, this));
 	addDependency("onNewData", &in_contours);
@@ -74,6 +75,11 @@ void ShapeDetector::onNewData() {
 		mu[i] = cv::moments( contours[i], false ); 
 	}
 	
+	float max_r = -1;
+	float max_rr = -1;
+	int max_id = -1;
+	cv::Point2f max_c;
+	
 	//  Get the mass centers:
 	std::vector<cv::Point2f> mc( contours.size() );
 	std::vector<float> cr( contours.size() );
@@ -83,10 +89,11 @@ void ShapeDetector::onNewData() {
 		float a = cv::contourArea(contours[i]);
 		float l = cv::arcLength(contours[i], true);
 		cr[i] = l*l/a;
-		if (fabs(cr[i] - shape1_compactness) < fabs(cr[i] - shape2_compactness))
+		if (fabs(cr[i] - shape1_compactness) < fabs(cr[i] - shape2_compactness)) {
 			names[i] = shape1_name;
-		else
+		} else {
 			names[i] = shape2_name;
+		}
 	}
 
 	// Draw contours
@@ -94,10 +101,38 @@ void ShapeDetector::onNewData() {
 		cv::Scalar color = cv::Scalar( 0, 255, 0 );
 		cv::drawContours( img, contours, i, color, 2, 8, cv::noArray(), 0, cv::Point() );
 		cv::circle( img, mc[i], 2, color, -1, 8, 0 );
-		std::string txt = names[i] + ": " + std::to_string(round(cr[i]*10)/10);
+		
+		float a = cv::contourArea(contours[i]);
+		if (a > 10000) continue;
+		
+		cv::Point2f c;
+		float r;
+		cv::minEnclosingCircle(contours[i], c, r);
+		float ratio = a / (M_PI * r * r);
+		
+		if (ratio > max_r) {
+			max_r = ratio;
+			max_id = i;
+			max_c = c;
+			max_rr = r;
+		}
+		
+		cv::circle( img, c, r, cv::Scalar(0, 0, 255), 1, 8, 0 );
+		cv::circle( img, c, 2, cv::Scalar(0, 0, 255), -1, 8, 0 );
+		
+		//std::string txt = names[i] + ": " + std::to_string(round(cr[i]*10)/10);
+		std::string txt = std::to_string(ratio);
 		cv::putText(img, txt, mc[i], cv::FONT_HERSHEY_PLAIN, 1, color);
+		
 	}
 	
+	if (max_r > 0.6) {
+		std::vector<float> ball;
+		ball.push_back(max_c.x);
+		ball.push_back(max_c.y);
+		ball.push_back(max_rr);
+		out_ball.write(ball);
+	}
 	out_img.write(img);
 }
 
